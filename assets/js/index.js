@@ -1,3 +1,4 @@
+
 function register()
 {
     var data=
@@ -132,33 +133,32 @@ function details()
                         <h5>Time: <span id="time${data.user.date[i]._id}">${data.user.date[i].time}</span></h5>
                         <h5>Details: <span id="det${data.user.date[i]._id}">${data.user.date[i].details}</span></h5>
                         <h5>Message For Client: <span id="msg${data.user.date[i]._id}">${data.user.date[i].msg}</span></h5>
-                        <h5>Important Documents: <form method="POST" enctype="multipart/form-data">
+                        <h5>Important Documents:</h5> 
                         <div class="form-group">
-                          <label for="example-input-file"> </label>
-                          <input type="file" name="multi-files" multiple id="input-multi-files" class="form-control-file border"/>
+                          <label for="example-input-file">Upload Image/PDF</label>
+                          <input type="file" name="avatar" id="avatar${data.user.date[i]._id}" accept="image/jpeg,image/png,application/pdf,image/jpg" class="form-control-file border"/>
                         </div>
-                        <button type="submit" class="btn btn-primary" onclick="addDoc(${data.user.case_no})">Submit</button>
-                      </form> </h5>
+                        
+                        <button type="submit" class="btn btn-primary" name="${data.user.case_no}/${data.user.date[i]._id}" onclick="addDoc(this.name)">Submit</button>
+                    
                         <div class="accordion" id="docs${i+1}">
-                            <div class="card">
-                                <div class="card-header" id="docs${i+1}-1" type="button" data-toggle="collapse" data-target="#docd${i+1}-1" aria-expanded="true" aria-controls="docs${i+1}-1">
-                                    <i class="fa fa-plus"></i> Document 1                        
-                                </div>
-                                <div id="docd${i+1}-1" class="card-body collapse" aria-labelledby="docs${i+1}-1" data-parent="#docs${i+1}">
-                                    Hello
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header" id="docs${i+1}-2" type="button" data-toggle="collapse" data-target="#docd${i+1}-2" aria-expanded="true" aria-controls="docs${i+1}-2">
-                                    <i class="fa fa-plus"></i> Document 1                        
-                                </div>
-                                <div id="docd${i+1}-2" class="card-body collapse" aria-labelledby="docs${i+1}-2" data-parent="#docs${i+1}">
-                                    Document
-                                </div>
-                            </div>
+                        
                         </div>
                     </div>
                 </div>`)
+                console.log(data.user.date[i].files.length)
+                for(var j=0;j<data.user.date[i].files.length;j++)
+                {
+                    $(`#docs${i+1}`).append(`<div class="card">
+                    <div class="card-header" id="docs${i+1}-${j+1}" type="button" data-toggle="collapse" data-target="#docd${i+1}-${j+1}" aria-expanded="true" aria-controls="docs${i+1}-${j+1}">
+                        <i class="fa fa-plus"></i> Document ${j+1}                      
+                    </div>
+                    <div id="docd${i+1}-${j+1}" class="card-body collapse" aria-labelledby="docs${i+1}-${j+1}" data-parent="#docs${i+1}">
+                    <a href="http://localhost:3000/adv/get/upload?cno=${data.user.case_no}&dno=${data.user.date[i]._id}&updno=${data.user.date[i].files[j]._id}" download target="_blank">
+                    View and download document</a>
+                    </div>
+                </div>`)
+                }
                 }
             }
             else{
@@ -360,3 +360,36 @@ function count()
         }
     }
 }
+
+function addDoc(cno)
+{           
+            console.log(cno)
+            var hash=cno.indexOf("/")
+            var case_no=cno.slice(0,hash)
+            var dno=cno.slice(hash+1,cno.length)
+            console.log(case_no)
+            console.log(dno)
+            var fileInput = document.getElementById('avatar'+dno);
+			var data = new FormData();
+			data.append("inputFile", fileInput.files[0],fileInput.files[0].name);
+            console.log(fileInput.files[0].name)
+			var xhr = new XMLHttpRequest();
+			xhr.open(
+				"POST",`http://localhost:3000/adv/upload?case_no=${case_no}&date_no=${dno}`
+			);
+
+            xhr.send(data)
+            xhr.onload=function()
+            {
+                if(this.status==200)
+                {
+                    alert('file added')
+                    window.location.reload()
+                }
+                else{
+                    alert('failed')
+                    window.location.reload()
+                }
+            }
+}
+
