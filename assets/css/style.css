@@ -87,7 +87,7 @@ a.card:hover{
     box-shadow: 0px 0px 5px white;
 }
 
-.loginbox form{
+.loginbox .form{
     width: 100%;
     max-width: 450px;
 }

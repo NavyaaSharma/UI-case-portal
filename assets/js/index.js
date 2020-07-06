@@ -57,7 +57,7 @@ function searchcase()
     console.log(data)
     var jwt = localStorage.getItem('JWT_Token')
     var xh = new XMLHttpRequest();
-    xh.open("POST", "http://localhost:3000/adv/details", true)
+    xh.open("POST", "https://case-manger.herokuapp.com/adv/details", true)
     xh.setRequestHeader('Content-Type', 'application/json')
     xh.setRequestHeader('Authorization', jwt)
     xh.send(JSON.stringify(data))
@@ -100,7 +100,7 @@ function details()
     console.log(data)
     var jwt = localStorage.getItem('JWT_Token')
     var xh = new XMLHttpRequest();
-    xh.open("POST", "http://localhost:3000/adv/moredetails", true)
+    xh.open("POST", "https://case-manger.herokuapp.com/adv/moredetails", true)
     xh.setRequestHeader('Content-Type', 'application/json')
     xh.setRequestHeader('Authorization', jwt)
     xh.send(JSON.stringify(data))
@@ -139,7 +139,7 @@ function details()
                           <input type="file" name="avatar" id="avatar${data.user.date[i]._id}" accept="image/jpeg,image/png,application/pdf,image/jpg" class="form-control-file border"/>
                         </div>
                         
-                        <button type="submit" class="btn btn-primary" name="${data.user.case_no}/${data.user.date[i]._id}" onclick="addDoc(this.name)">Submit</button>
+                        <button type="submit" class="btn btn-primary" name="${data.user.case_no}%${data.user.date[i]._id}" onclick="addDoc(this.name)">Submit</button>
                     
                         <div class="accordion" id="docs${i+1}">
                         
@@ -154,7 +154,7 @@ function details()
                         <i class="fa fa-plus"></i> Document ${j+1}                      
                     </div>
                     <div id="docd${i+1}-${j+1}" class="card-body collapse" aria-labelledby="docs${i+1}-${j+1}" data-parent="#docs${i+1}">
-                    <a href="http://localhost:3000/adv/get/upload?cno=${data.user.case_no}&dno=${data.user.date[i]._id}&updno=${data.user.date[i].files[j]._id}" download target="_blank">
+                    <a href="https://case-manger.herokuapp.com/adv/get/upload?cno=${data.user.case_no}&dno=${data.user.date[i]._id}&updno=${data.user.date[i].files[j]._id}" download target="_blank">
                     View and download document</a>
                     </div>
                 </div>`)
@@ -196,7 +196,7 @@ function addDate()
     var jwt = localStorage.getItem('JWT_Token')
     console.log(jwt)
     var xh = new XMLHttpRequest();
-    xh.open("POST", "http://localhost:3000/adv/add-date", true)
+    xh.open("POST", "https://case-manger.herokuapp.com/adv/add-date", true)
     xh.setRequestHeader('Content-Type', 'application/json')
     xh.setRequestHeader('Authorization', jwt)
     xh.send(JSON.stringify(data))
@@ -233,7 +233,7 @@ function editCase()
     var jwt = localStorage.getItem('JWT_Token')
     console.log(jwt)
     var xh = new XMLHttpRequest();
-    xh.open("POST", `http://localhost:3000/adv/update/case/details?case_no=${cno}`, true)
+    xh.open("POST", `https://case-manger.herokuapp.com/adv/update/case/details?case_no=${cno}`, true)
     xh.setRequestHeader('Content-Type', 'application/json')
     xh.setRequestHeader('Authorization', jwt)
     xh.send(JSON.stringify(data))
@@ -276,7 +276,7 @@ function editDate()
     var jwt = localStorage.getItem('JWT_Token')
     console.log(jwt)
     var xh = new XMLHttpRequest();
-    xh.open("POST", `http://localhost:3000/adv/update/case/date?case_no=${cno}&date_id=${date_id}`, true)
+    xh.open("POST", `https://case-manger.herokuapp.com/adv/update/case/date?case_no=${cno}&date_id=${date_id}`, true)
     xh.setRequestHeader('Content-Type', 'application/json')
     xh.setRequestHeader('Authorization', jwt)
     xh.send(JSON.stringify(data))
@@ -315,7 +315,7 @@ function addCase()
     var jwt = localStorage.getItem('JWT_Token')
     console.log(jwt)
     var xh = new XMLHttpRequest();
-    xh.open("POST", "http://localhost:3000/adv/add-case", true)
+    xh.open("POST", "https://case-manger.herokuapp.com/adv/add-case", true)
     xh.setRequestHeader('Content-Type', 'application/json')
     xh.setRequestHeader('Authorization', jwt)
     xh.send(JSON.stringify(data))
@@ -342,7 +342,7 @@ function count()
     var jwt = localStorage.getItem('JWT_Token')
     console.log(jwt)
     var xh = new XMLHttpRequest();
-    xh.open("GET", "http://localhost:3000/adv/count", true)
+    xh.open("GET", "https://case-manger.herokuapp.com/adv/count", true)
     xh.setRequestHeader('Content-Type', 'application/json')
     xh.setRequestHeader('Authorization', jwt)
     xh.send()
@@ -364,7 +364,7 @@ function count()
 function addDoc(cno)
 {           
             console.log(cno)
-            var hash=cno.indexOf("/")
+            var hash=cno.indexOf("%")
             var case_no=cno.slice(0,hash)
             var dno=cno.slice(hash+1,cno.length)
             console.log(case_no)
@@ -375,7 +375,7 @@ function addDoc(cno)
             console.log(fileInput.files[0].name)
 			var xhr = new XMLHttpRequest();
 			xhr.open(
-				"POST",`http://localhost:3000/adv/upload?case_no=${case_no}&date_no=${dno}`
+				"POST",`https://case-manger.herokuapp.com/adv/upload?case_no=${case_no}&date_no=${dno}`
 			);
 
             xhr.send(data)
