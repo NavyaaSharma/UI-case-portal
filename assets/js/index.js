@@ -1,3 +1,14 @@
+function validatecase()
+{
+    if(document.getElementById('cno').value && document.getElementById('name').value && document.getElementById('phone').value && document.getElementById('mail').value && document.getElementById('judge').value && document.getElementById('desc').value && document.getElementById('p1').value && document.getElementById('p2').value)
+    {
+        addCase()
+    }
+    else
+    {
+        alert('Please fill all details to add a new case!')
+    }
+}
 
 function register()
 {
@@ -128,12 +139,15 @@ function uc1()
                     if(data.payload[i].date[j].date==checkDate)
                     {
                         ctr=ctr+1
-                        $('#dispcase1').append(`<a href="case.html?id=${data.payload[i].case_no}" class="card col-10 col-md-6 m-1">
-                        <h4 class="card-title">Case Name: <span>${data.payload[i].name}</span></h4>
-                        <h5>Date of hearing: <span>${data.payload[i].date[j].date}</span></h5>
+                        $('#dispcase1').append(`<div class="card col-10 col-md-6 m-1">
+                        <h4 class="card-title">Case Name: <span id="cn${data.payload[i]._id}">${data.payload[i].name}</span></h4>
+                        <h5>Date of hearing: <span id="d${data.payload[i]._id}">${data.payload[i].date[j].date}</span></h5>
                         <h6>${data.payload[i].party.party1} v/s ${data.payload[i].party.party2}</h6>
-        
-                    </a>`)
+                        <p id="j${data.payload[i]._id}" hidden>${data.payload[i].judge}</p>
+                        <p id="t${data.payload[i]._id}" hidden>${data.payload[i].date[j].time}</p>
+                        <p id="e${data.payload[i]._id}" hidden>${data.payload[i].email}</p>
+                        <button class="btn btn-dark m-2 float-right" name="${data.payload[i]._id}" onclick="reminder(this.name)">Send Reminder</button>
+                    </div>`)
                     }
                 }
                 
@@ -248,6 +262,7 @@ function details()
             document.getElementById('edesc').value=data.user.desc
             document.getElementById('ejudge').value=data.user.judge
             document.getElementById('cno').innerHTML=data.user.case_no
+            document.getElementById('to').value=data.user.email
             if(data.user.date.length!=0)
             {
                 for(var i=0;i<data.user.date.length;i++)
@@ -431,6 +446,7 @@ function addCase()
         "case_no":document.getElementById('cno').value,
         "name":document.getElementById('name').value,
         "phone":document.getElementById('phone').value,
+        "email":document.getElementById('mail').value,
         "judge":document.getElementById('judge').value,
         "desc":document.getElementById('desc').value,
         "party":
@@ -548,4 +564,40 @@ function sendmail()
         }
     }
 }
+
+function reminder(id)
+{
+    var cname=document.getElementById(`cn${id}`).innerHTML
+    var cdate=document.getElementById(`d${id}`).innerHTML
+    var judge=document.getElementById(`j${id}`).innerHTML
+    var time=document.getElementById(`t${id}`).innerHTML
+    var data={
+        "to":document.getElementById(`e${id}`).innerHTML,
+        "subject":"Reminder for upcoming case date",
+        "message":`<h2>This is a reminder for your next date with respect to the about mentioned case details:</h2>
+        <h4>Case Name : ${cname}</h4>
+        <h4>Next Date : ${cdate}</h4>
+        <h4> Time : ${time}</h4>
+        <h4>Court/Judge Name : ${judge}</h4>`
+    }
+    console.log(data)
+    var jwt = localStorage.getItem('JWT_Token')
+    console.log(jwt)
+    var xh = new XMLHttpRequest();
+    xh.open("POST", "https://case-manger.herokuapp.com/send/email", true)
+    xh.setRequestHeader('Content-Type', 'application/json')
+    xh.setRequestHeader('Authorization', jwt)
+    xh.send(JSON.stringify(data))
+    xh.onload=function()
+    {
+        if(this.status==200)
+        {
+            alert('Reminder sent successfully')
+        }
+        else{
+            alert('Failed to send email! Please try again')
+        }
+    }
+}
+
 
