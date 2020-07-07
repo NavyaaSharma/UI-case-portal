@@ -3,19 +3,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="UTF-8">
         <!-- Title -->
-        <title>Add Case</title>
+        <title>Admin Dashboard</title>
         <!-- Linked Assets -->
         <link rel="icon" href="assets/img/favicon.png" type="image/png">
         <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" type="image/png">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" 
             defer>
-        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-            defer> -->
-        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+            defer>
+        <!-- <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"> -->
         <link rel="stylesheet" href="assets/css/style.css">
     </head>
-    <body id="anim">
+    <body onload="count();">
         <header>
             <nav class="navbar navbar-dark text-center">
                 <div class="col-sm-3 col-md-2 px-0">
@@ -24,9 +24,9 @@
                     </a>
                 </div>
                 
-                <div class="col-md-5 mt-2">
+                <div class="col-md-5">
                     <div class="row">
-                        <div class="col"><a href="index.html">Dashboard</a></div>
+                        <div class="col"><a href="index.html">Admin Dashboard</a></div>
                         <div class="col"><a href="add.html">Add new case</a></div>
                         <div class="col"><a href="upcoming.html">See upcoming cases</a></div>
                         <div class="col">
@@ -34,7 +34,7 @@
                                 <a href="login.html">Login</a><br><a href="signup.html">Sign Up</a>
                             </span>
                             <span id="c2">
-                                <a href="logout.html">Logout</a>
+                                <a href="login.html">Logout</a>
                             </span>
                         </div>
                     </div>
@@ -42,27 +42,26 @@
             </nav>
         </header>
         <section class="justify-content-center row">
-            <div class="loginbox" data-aos="fade-up">
-                <div class="form">
-                    <h1>Add Case</h1>
-                    <div class="form-group">
-                        <input class="form-control mt-3" type="text" placeholder="Case Numner" id="cno" required>
-                        <input class="form-control mt-3" type="text" placeholder="Case Name" id="name" required>
-                        <input class="form-control mt-3" type="text" placeholder="Case Description" id="desc" required>
-                        <input class="form-control mt-3" type="text" placeholder="Client's Phone Number" id="phone" required>
-                        <input class="form-control mt-3" type="text" placeholder="Judge Name" id="judge" required>
-                        <input class="form-control mt-3" type="text" placeholder="Name Of opponrnt 1" id="p1" required>
-                        <input class="form-control mt-3" type="text" placeholder="Name Of opponrnt 2" id="p2" required>
-                        <button class="btn btn-dark mt-3 form-control" onclick="addCase()">Add Case</button>
-                    </div>
-            </div>
+            <div class="card col-md-8">
+                <div class="card-body">
+                    <h3 class="card-title">1 day to case date</h3>
+                </div>
             </div>
         </section>
+        <section class="justify-content-center row" id="dispcase1">
+                
+        </section>
+        <section class="justify-content-center row">
+            <div class="card col-md-8">
+                <div class="card-body">
+                    <h3 class="card-title">5 days to case date</h3>
+                </div>
+            </div>
+        </section>
+        <section class="justify-content-center row" id="dispcase2">
+                
+        </section>
         <script src="./assets/js/index.js"></script>
-        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <script>
-            AOS.init();
-        </script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

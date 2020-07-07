@@ -5,7 +5,7 @@ html, body{
     background-color: #222;
 }
 #anim{
-    background: linear-gradient(-45deg, #000, #111,#333);
+    background:#353535;
     background-size: 400% 400%;
     position: relative;
     animation: change 10s ease-in-out infinite;
@@ -82,7 +82,7 @@ a.card:hover{
     text-align: center;
     width: 50%;
     max-width: 500px;
-    height: 80vh;
+    height: 100vh;
     
     box-shadow: 0px 0px 5px white;
 }
@@ -116,6 +116,10 @@ a.card:hover{
 }
 
 .modal input.form-control{
-    background-color: #464c52 !important;
-    color: white !important;
+    background-color: #f0f3f7 !important;
+    color: black !important;
+}
+.modal textarea{
+    background-color:#f0f3f7 !important;
+    color: black !important;
 }

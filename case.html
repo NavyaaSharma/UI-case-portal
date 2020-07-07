@@ -14,8 +14,9 @@
             defer>
         <!-- <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">      -->
         <link rel="stylesheet" href="assets/css/style.css">
+        <script src="./assets/js/index.js"></script>
     </head>
-    <body onload="details()">
+    <body onload="details();">
         <header>
             <nav class="navbar navbar-dark text-center">
                 <div class="col-sm-3 col-md-2 px-0">
@@ -24,20 +25,13 @@
                     </a>
                 </div>
                 <div class="col-sm-9 col-md-5">
-                    <div class="row">
-                        <div class="input-group">
-                            <input type="text" class="form-control srchbox" placeholder="Search Cases"
-                                id="searchbox">
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-dark"><i class="fa fa-search"></i></button>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
                 <div class="col-md-5 mt-2">
                     <div class="row">
                         <div class="col"><a href="index.html">Dashboard</a></div>
                         <div class="col"><a href="add.html">Add new case</a></div>
+                        <div class="col"><a href="upcoming.html">See upcoming cases</a></div>
                         <div class="col">
                             <span id="c1" class="d-none">
                                 <a href="login.html">Login</a><br><a href="signup.html">Sign Up</a>
@@ -55,7 +49,7 @@
                 <h2 class="card-title row">
                     <div class="col-sm-5 shadow-text">Case Details</div>
                     <div class="justify-content-center col-sm-7 d-flex">
-                        <button class="btn btn-dark m-2">Send Email</button>
+                        <button class="btn btn-dark m-2" data-toggle="modal" data-target="#mail">Send Email</button>
                         <button class="btn btn-dark m-2" data-toggle="modal" data-target="#editCase">Edit Case Details</button>
                     </div>
                 </h2>
@@ -72,47 +66,35 @@
                     </div>
                 </h2>
                 <div class="accordion" id="dates">
-                    <!-- <div class="card">
-                        <div class="card-header" id="date1" type="button" data-toggle="collapse" data-target="#data1" aria-expanded="true" aria-controls="data1">
-                            <i class="fa fa-plus"></i> Date 1                        
-                        </div>
-                        <div id="data1" class="card-body collapse" aria-labelledby="date1" data-parent="#dates">
-                            <button class="btn btn-dark m-2" data-toggle="modal" data-target="#editDate" data-date="date1">Edit Details</button>
-                            <h5>Next Date: </h5>
-                            <h5>Time: </h5>
-                            <h5>Message: </h5>
-                            <h5>Important Documents: <button class="btn btn-dark m-2">Upload New File</button> </h5>
-                            <div class="accordion" id="docs1">
-                                <div class="card">
-                                    <div class="card-header" id="docs1-1" type="button" data-toggle="collapse" data-target="#docd1-1" aria-expanded="true" aria-controls="docs1-1">
-                                        <i class="fa fa-plus"></i> Document 1                        
-                                    </div>
-                                    <div id="docd1-1" class="card-body collapse" aria-labelledby="docs1-1" data-parent="#docs1">
-                                        Hello
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-header" id="docs1-2" type="button" data-toggle="collapse" data-target="#docd1-2" aria-expanded="true" aria-controls="docs1-2">
-                                        <i class="fa fa-plus"></i> Document 1                        
-                                    </div>
-                                    <div id="docd1-2" class="card-body collapse" aria-labelledby="docs1-2" data-parent="#docs1">
-                                        Document
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- <div class="card">
-                        <div class="card-header" id="date2" type="button" data-toggle="collapse" data-target="#data2" aria-expanded="true" aria-controls="data2">
-                            <i class="fa fa-plus"></i> Date 2                      
-                        </div>
-                        <div id="data2" class="card-body collapse" aria-labelledby="date2" data-parent="#dates">
-                            
-                        </div>
-                    </div> -->
+            
                 </div>
             </div>            
         </section>
+        <div class="modal fade" id="mail" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Send email to the client</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times text-white"></i>
+                        </button>
+                    </div>
+                    <form action="">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <input class="form-control mt-1" type="email" placeholder="Email of recipient" id="to">
+                                <input class="form-control mt-1" type="text" placeholder="Subject" id="subject">
+                                <textarea class="form-control mt-1" rows="4" cols="50" placeholder="Message.." id="emailmsg"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close without changing</button>
+                            <button type="button" class="btn btn-outline-light" onclick="sendmail()">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <div class="modal fade" id="editCase" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">

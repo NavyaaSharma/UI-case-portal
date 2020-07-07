@@ -393,3 +393,31 @@ function addDoc(cno)
             }
 }
 
+function sendmail()
+{
+    var data={
+        "to":document.getElementById('to').value,
+        "subject":document.getElementById('subject').value,
+        "message":document.getElementById('emailmsg').value
+   
+    }
+    var jwt = localStorage.getItem('JWT_Token')
+    console.log(jwt)
+    var xh = new XMLHttpRequest();
+    xh.open("POST", "https://case-manger.herokuapp.com/send/email", true)
+    xh.setRequestHeader('Content-Type', 'application/json')
+    xh.setRequestHeader('Authorization', jwt)
+    xh.send(JSON.stringify(data))
+    xh.onload=function()
+    {
+        if(this.status==200)
+        {
+            alert('Email sent successfully')
+            window.location.reload()
+        }
+        else{
+            alert('Failed to send email! Please try again')
+        }
+    }
+}
+
