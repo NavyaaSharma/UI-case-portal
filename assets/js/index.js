@@ -89,6 +89,134 @@ function searchcase()
     }
 }
 
+function uc1()
+{
+    var days=1
+            var date = new Date();
+            var last = new Date(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            var day =(last.getDate()).toString();
+            var month=(last.getMonth()+1).toString();
+            var year=last.getFullYear().toString();
+            if(day.length==1)
+            {
+                day="0"+day
+            }
+            if(month.length==1)
+            {
+                month="0"+month
+            }
+            var checkDate=day+"-"+month+"-"+year
+        console.log(checkDate)
+    // console.log(data)
+    var jwt = localStorage.getItem('JWT_Token')
+    var xh = new XMLHttpRequest();
+    xh.open("GET", "https://case-manger.herokuapp.com/adv/allCases", true)
+    xh.setRequestHeader('Content-Type', 'application/json')
+    xh.setRequestHeader('Authorization', jwt)
+    xh.send()
+    xh.onload=function(){
+        console.log(this.responseText)
+        if(this.status==200)
+        {
+            var ctr=0
+            var data = JSON.parse(this.responseText)
+            console.log(data)
+            for(var i=0;i<data.payload.length;i++)
+            {
+                for(var j=0;j<data.payload[i].date.length;j++)
+                {
+                    if(data.payload[i].date[j].date==checkDate)
+                    {
+                        ctr=ctr+1
+                        $('#dispcase1').append(`<a href="case.html?id=${data.payload[i].case_no}" class="card col-10 col-md-6 m-1">
+                        <h4 class="card-title">Case Name: <span>${data.payload[i].name}</span></h4>
+                        <h5>Date of hearing: <span>${data.payload[i].date[j].date}</span></h5>
+                        <h6>${data.payload[i].party.party1} v/s ${data.payload[i].party.party2}</h6>
+        
+                    </a>`)
+                    }
+                }
+                
+            }
+            if(ctr==0)
+            {
+                $('#dispcase1').append(`<div class="card col-10 col-md-6 m-1">
+                <h4 class="card-title">NO UPCOMING CASES</h4>
+            </div>`)
+            }
+        }
+        else{
+            $('#dispcase1').append(`<div class="card col-10 col-md-6 m-1">
+                <h4 class="card-title">SOMETHING WENT WRONG! TRY AGAIN</h4>
+            </div>`)
+        }
+    }
+}
+
+function uc2()
+{
+    var days=5
+            var date = new Date();
+            var last = new Date(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            var day =(last.getDate()).toString();
+            var month=(last.getMonth()+1).toString();
+            var year=last.getFullYear().toString();
+            if(day.length==1)
+            {
+                day="0"+day
+            }
+            if(month.length==1)
+            {
+                month="0"+month
+            }
+            var checkDate=day+"-"+month+"-"+year
+        console.log(checkDate)
+    // console.log(data)
+    var jwt = localStorage.getItem('JWT_Token')
+    var xh = new XMLHttpRequest();
+    xh.open("GET", "https://case-manger.herokuapp.com/adv/allCases", true)
+    xh.setRequestHeader('Content-Type', 'application/json')
+    xh.setRequestHeader('Authorization', jwt)
+    xh.send()
+    xh.onload=function(){
+        console.log(this.responseText)
+        if(this.status==200)
+        {
+            var ctr=0
+            var data = JSON.parse(this.responseText)
+            console.log(data)
+            for(var i=0;i<data.payload.length;i++)
+            {
+                for(var j=0;j<data.payload[i].date.length;j++)
+                {
+                    if(data.payload[i].date[j].date==checkDate)
+                    {
+                        ctr=ctr+1
+                        $('#dispcase2').append(`<a href="case.html?id=${data.payload[i].case_no}" class="card col-10 col-md-6 m-1">
+                        <h4 class="card-title">Case Name: <span>${data.payload[i].name}</span></h4>
+                        <h5>Date of hearing: <span>${data.payload[i].date[j].date}</span></h5>
+                        <h6>${data.payload[i].party.party1} v/s ${data.payload[i].party.party2}</h6>
+        
+                    </a>`)
+                    }
+                }
+                
+            }
+            if(ctr==0)
+            {
+                $('#dispcase2').append(`<div class="card col-10 col-md-6 m-1">
+                <h4 class="card-title">NO UPCOMING CASES</h4>
+            </div>`)
+            }
+        }
+        else{
+            $('#dispcase2').append(`<div class="card col-10 col-md-6 m-1">
+                <h4 class="card-title">SOMETHING WENT WRONG! TRY AGAIN</h4>
+            </div>`)
+        }
+    }
+}
+
 function details()
 {
     const queryString = window.location.search
