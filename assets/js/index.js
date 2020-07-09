@@ -10,11 +10,34 @@ function validatecase()
     }
 }
 
+function validate1()
+{
+    if(document.getElementById('uname').value && document.getElementById('email').value && document.getElementById('pass').value)
+    {
+        register()
+    }
+    else
+    {
+        alert('Please fill complete details to register!')
+    }
+}
+
+function validate2()
+{
+    if(document.getElementById('pass').value && document.getElementById('email').value)
+    {
+        login()
+    }
+    else
+    {
+        alert('Please fill complete details to login!')
+    }
+}
+
 function register()
 {
     var data=
     {
-    "name":document.getElementById('uname').value,
 	"email":document.getElementById('email').value,
 	"password":document.getElementById('pass').value
     }
@@ -206,12 +229,15 @@ function uc2()
                     if(data.payload[i].date[j].date==checkDate)
                     {
                         ctr=ctr+1
-                        $('#dispcase2').append(`<a href="case.html?id=${data.payload[i].case_no}" class="card col-10 col-md-6 m-1">
-                        <h4 class="card-title">Case Name: <span>${data.payload[i].name}</span></h4>
-                        <h5>Date of hearing: <span>${data.payload[i].date[j].date}</span></h5>
+                        $('#dispcase2').append(`<div class="card col-10 col-md-6 m-1">
+                        <h4 class="card-title">Case Name: <span id="cn${data.payload[i]._id}">${data.payload[i].name}</span></h4>
+                        <h5>Date of hearing: <span id="d${data.payload[i]._id}">${data.payload[i].date[j].date}</span></h5>
                         <h6>${data.payload[i].party.party1} v/s ${data.payload[i].party.party2}</h6>
-        
-                    </a>`)
+                        <p id="j${data.payload[i]._id}" hidden>${data.payload[i].judge}</p>
+                        <p id="t${data.payload[i]._id}" hidden>${data.payload[i].date[j].time}</p>
+                        <p id="e${data.payload[i]._id}" hidden>${data.payload[i].email}</p>
+                        <button class="btn btn-dark m-2 float-right" name="${data.payload[i]._id}" onclick="reminder(this.name)">Send Reminder</button>
+                    </div>`)
                     }
                 }
                 
@@ -574,7 +600,7 @@ function reminder(id)
     var data={
         "to":document.getElementById(`e${id}`).innerHTML,
         "subject":"Reminder for upcoming case date",
-        "message":`<h2>This is a reminder for your next date with respect to the about mentioned case details:</h2>
+        "message":`<h2>This is a reminder for your next date with respect to the below mentioned case details:</h2>
         <h4>Case Name : ${cname}</h4>
         <h4>Next Date : ${cdate}</h4>
         <h4> Time : ${time}</h4>
@@ -600,4 +626,38 @@ function reminder(id)
     }
 }
 
+function homecheck()
+{
+    var jwt=localStorage.getItem('JWT_Token')
+    if(!jwt)
+    {
+        $('#homepg').append(`<div class="col"><a href="signup.html">Create Password</a></div>
+        <div class="col"><a href="login.html">Login</a></div>`)
 
+    }
+    else{
+        $('#homepg').append(`<div class="col"><a href="dashboard.html">My Dashboard</a></div>
+        <div class="col">
+        <a style="cursor: pointer; color: white;" onclick="logout()">Logout</a>
+</div>`)
+
+    }
+}
+
+function logout()
+{
+    localStorage.removeItem('user')
+    localStorage.removeItem('JWT_Token')
+    window.location.replace('index.html')
+}
+
+function check()
+{
+    var jwt=localStorage.getItem('JWT_Token')
+    if(!jwt)
+    {
+        
+        window.location.replace('login.html')
+
+    }
+}
