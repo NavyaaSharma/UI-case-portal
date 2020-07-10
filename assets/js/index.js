@@ -353,13 +353,24 @@ function details()
 
 function addDate()
 {
+    var getdate=document.getElementById('adate').value
+    var hash=getdate.indexOf("-")
+    var day=getdate.slice(0,hash)
+    var l1=getdate.slice(hash+1,getdate.length)
+    var h2=l1.indexOf("-")
+    var month=l1.slice(0,h2)
+    var year=l1.slice(h2+1,getdate.length)
+    var revdate=year+"-"+month+"-"+day
+    console.log(revdate)
     var data={
         "case_no":document.getElementById('cno').innerHTML,
+        "name":document.getElementById('name').innerHTML,
         "date_details":{
             "date":document.getElementById('adate').value,
             "time":document.getElementById('atime').value,
             "details":document.getElementById('adetails').value,
-            "msg":document.getElementById('amsg').value
+            "msg":document.getElementById('amsg').value,
+            "revdate":revdate
         }    
     }
     var jwt = localStorage.getItem('JWT_Token')
@@ -373,8 +384,8 @@ function addDate()
         console.log(this.responseText)
         if(this.status==201)
         {
-            var data = JSON.parse(this.responseText)
-            console.log(data)
+            // var data = JSON.parse(this.responseText)
+            // console.log(data)
             alert('Date added successfully!')
             window.location.reload()
             
