@@ -109,6 +109,10 @@ function searchcase()
             </a>`)
             }
         }
+        else if(this.status==403)
+        {
+            alert('Session expired! Please Login to continue')
+        }
         else if(this.status==404)
         {
             $('#dispcase').append(`<a href="" class="card col-10 col-md-6 m-1">
@@ -181,6 +185,11 @@ function uc1()
                 <h4 class="card-title">NO UPCOMING CASES</h4>
             </div>`)
             }
+        }
+        else if(this.status==403)
+        {
+            alert('Session expired! Please Login to continue')
+            window.location.replace('login.html')
         }
         else{
             $('#dispcase1').append(`<div class="card col-10 col-md-6 m-1">
@@ -336,6 +345,11 @@ function details()
                         <i class="fa fa-plus"></i> No date history found                      
                     </div>`)
             }
+        }
+        else if(this.status==403)
+        {
+            alert('Session expired! Please Login to continue')
+            window.location.replace('login.html')
         }
         else if(this.status==404)
         {
@@ -510,6 +524,11 @@ function addCase()
             window.location.replace('index.html')
             
         }
+        else if(this.status==403)
+        {
+            alert('Session expired! Please Login to continue')
+            window.location.replace('login.html')
+        }
         else{
             alert('Failed to add a date! Try again')
             window.location.reload()
@@ -535,6 +554,11 @@ function count()
             console.log(data)
             document.getElementById('getcase').innerHTML=data.total
             
+        }
+        else if(this.status==403)
+        {
+            alert('Session expired! Please Login to continue')
+            window.location.replace('login.html')
         }
         else{
             document.getElementById('getcase').innerHTML="Unable to display"
@@ -671,4 +695,44 @@ function check()
         window.location.replace('login.html')
 
     }
+}
+
+function validate3()
+{
+    if(document.getElementById('pass').value && document.getElementById('email').value)
+    {
+        forgot()
+    }
+    else
+    {
+        alert('Please fill complete details!')
+    }
+}
+
+function forgot()
+{
+    var data=
+    {
+	"email":document.getElementById('email').value,
+	"password":document.getElementById('pass').value
+    }
+    var xh = new XMLHttpRequest();
+    xh.open("POST", "https://case-manger.herokuapp.com/admin/forgotpassword", true)
+    xh.setRequestHeader('Content-Type', 'application/json')
+    xh.send(JSON.stringify(data))
+    xh.onload=function(){
+        if(this.status==201)
+        {
+            alert('Password updated!')
+            window.location.replace('login.html')
+        }
+        else if(this.status==401){
+            alert('Email is not registered! Make sure you enter the correct email.')
+        }
+        else
+        {
+            alert('Couldnot update password. Try again!')
+            window.location.reload()
+        }
+}
 }
