@@ -111,7 +111,10 @@ function searchcase()
         }
         else if(this.status==403)
         {
+            localStorage.removeItem('user')
+            localStorage.removeItem('JWT_Token')
             alert('Session expired! Please Login to continue')
+            window.location.replace('login.html')
         }
         else if(this.status==404)
         {
@@ -147,6 +150,7 @@ function uc1()
         console.log(checkDate)
     // console.log(data)
     var jwt = localStorage.getItem('JWT_Token')
+    console.log(jwt)
     var xh = new XMLHttpRequest();
     xh.open("GET", "https://case-manger.herokuapp.com/adv/allCases", true)
     xh.setRequestHeader('Content-Type', 'application/json')
@@ -189,6 +193,8 @@ function uc1()
         }
         else if(this.status==403)
         {
+            localStorage.removeItem('user')
+            localStorage.removeItem('JWT_Token')
             alert('Session expired! Please Login to continue')
             window.location.replace('login.html')
         }
@@ -351,6 +357,8 @@ function details()
         }
         else if(this.status==403)
         {
+            localStorage.removeItem('user')
+            localStorage.removeItem('JWT_Token')
             alert('Session expired! Please Login to continue')
             window.location.replace('login.html')
         }
@@ -399,7 +407,7 @@ function addDate()
     xh.setRequestHeader('Authorization', jwt)
     xh.send(JSON.stringify(data))
     xh.onload=function(){
-        console.log(this.responseText)
+        console.log(this.status)
         if(this.status==201)
         {
             // var data = JSON.parse(this.responseText)
@@ -532,6 +540,8 @@ function addCase()
         }
         else if(this.status==403)
         {
+            localStorage.removeItem('user')
+            localStorage.removeItem('JWT_Token')
             alert('Session expired! Please Login to continue')
             window.location.replace('login.html')
         }
@@ -563,6 +573,8 @@ function count()
         }
         else if(this.status==403)
         {
+            localStorage.removeItem('user')
+            localStorage.removeItem('JWT_Token')
             alert('Session expired! Please Login to continue')
             window.location.replace('login.html')
         }
