@@ -173,6 +173,7 @@ function uc1()
                         <p id="j${data.payload[i]._id}" hidden>${data.payload[i].judge}</p>
                         <p id="t${data.payload[i]._id}" hidden>${data.payload[i].date[j].time}</p>
                         <p id="e${data.payload[i]._id}" hidden>${data.payload[i].email}</p>
+                        <p id="c${data.payload[i]._id}" hidden>${data.payload[i].venue}</p>
                         <button class="btn btn-dark m-2 float-right" name="${data.payload[i]._id}" onclick="reminder(this.name)">Send Reminder</button>
                     </div>`)
                     }
@@ -245,6 +246,7 @@ function uc2()
                         <p id="j${data.payload[i]._id}" hidden>${data.payload[i].judge}</p>
                         <p id="t${data.payload[i]._id}" hidden>${data.payload[i].date[j].time}</p>
                         <p id="e${data.payload[i]._id}" hidden>${data.payload[i].email}</p>
+                        <p id="c${data.payload[i]._id}" hidden>${data.payload[i].venue}</p>
                         <button class="btn btn-dark m-2 float-right" name="${data.payload[i]._id}" onclick="reminder(this.name)">Send Reminder</button>
                     </div>`)
                     }
@@ -309,6 +311,7 @@ function details()
                     <div id="data${i+1}" class="card-body collapse" aria-labelledby="date${i+1}" data-parent="#dates">
                         <button class="btn btn-dark m-2" data-toggle="modal" data-target="#editDate" data-date="date${i+1}" name="${data.user.date[i]._id}" onclick="middle(this.name)">Edit Details</button>
                         <h5>Time: <span id="time${data.user.date[i]._id}">${data.user.date[i].time}</span></h5>
+                        <h5>Venue: <span id="venue${data.user.date[i]._id}">${data.user.date[i].venue}</span></h5>
                         <h5>Details: <span id="det${data.user.date[i]._id}">${data.user.date[i].details}</span></h5>
                         <h5>Message For Client: <span id="msg${data.user.date[i]._id}">${data.user.date[i].msg}</span></h5>
                         <h5>Important Documents:</h5> 
@@ -384,6 +387,7 @@ function addDate()
             "time":document.getElementById('atime').value,
             "details":document.getElementById('adetails').value,
             "msg":document.getElementById('amsg').value,
+            "venue":document.getElementById('avenue').value,
             "revdate":revdate
         }    
     }
@@ -454,6 +458,7 @@ function middle(date_id)
     document.getElementById('utime').value=document.getElementById('time'+date_id).innerHTML
     document.getElementById('umsg').value=document.getElementById('msg'+date_id).innerHTML
     document.getElementById('udet').value=document.getElementById('det'+date_id).innerHTML
+    document.getElementById('uvenue').value=document.getElementById('venue'+date_id).innerHTML
     document.getElementById('did').innerHTML=date_id
 }
 function editDate()
@@ -463,6 +468,7 @@ function editDate()
         "date":document.getElementById('ucd').value,
         "details":document.getElementById('udet').value,
         "time":document.getElementById('utime').value,
+        "venue":document.getElementById('uvenue').value,
         "msg":document.getElementById('umsg').value
     }
     var cno=document.getElementById('cno').innerHTML
@@ -632,14 +638,16 @@ function reminder(id)
     var cdate=document.getElementById(`d${id}`).innerHTML
     var judge=document.getElementById(`j${id}`).innerHTML
     var time=document.getElementById(`t${id}`).innerHTML
+    var court=document.getElementById(`c${id}`).innerHTML
     var data={
         "to":document.getElementById(`e${id}`).innerHTML,
         "subject":"Reminder for upcoming case date",
         "message":`<h2>This is a reminder for your next date with respect to the below mentioned case details:</h2>
         <h4>Case Name : ${cname}</h4>
         <h4>Next Date : ${cdate}</h4>
-        <h4> Time : ${time}</h4>
-        <h4>Court/Judge Name : ${judge}</h4>`
+        <h4>Time : ${time}</h4>
+        <h4>Venue : ${court}</h4>
+        <h4>Judge Name : ${judge}</h4>`
     }
     console.log(data)
     var jwt = localStorage.getItem('JWT_Token')
