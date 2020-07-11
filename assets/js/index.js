@@ -74,7 +74,7 @@ function login()
         {
             var data = JSON.parse(this.responseText)
             localStorage.setItem("JWT_Token", "JWT " + data.token)
-            window.location.replace('index.html')
+            window.location.replace('dashboard.html')
         }
         else{
             alert('Invalid login credentials')
@@ -85,6 +85,7 @@ function login()
 
 function searchcase()
 {
+    document.getElementById('searchbox').value=''
     var data={
         "phone":document.getElementById('searchbox').value
     }
@@ -99,6 +100,7 @@ function searchcase()
         console.log(this.responseText)
         if(this.status==200)
         {
+            document.getElementById('dispcase').innerHTML=''
             var data = JSON.parse(this.responseText)
             console.log(data)
             for(var i=0;i<data.payload.length;i++)
@@ -177,7 +179,7 @@ function uc1()
                         <p id="j${data.payload[i]._id}" hidden>${data.payload[i].judge}</p>
                         <p id="t${data.payload[i]._id}" hidden>${data.payload[i].date[j].time}</p>
                         <p id="e${data.payload[i]._id}" hidden>${data.payload[i].email}</p>
-                        <p id="c${data.payload[i]._id}" hidden>${data.payload[i].venue}</p>
+                        <p id="c${data.payload[i]._id}" hidden>${data.payload[i].date[j].venue}</p>
                         <button class="btn btn-dark m-2 float-right" name="${data.payload[i]._id}" onclick="reminder(this.name)">Send Reminder</button>
                     </div>`)
                     }
@@ -252,7 +254,7 @@ function uc2()
                         <p id="j${data.payload[i]._id}" hidden>${data.payload[i].judge}</p>
                         <p id="t${data.payload[i]._id}" hidden>${data.payload[i].date[j].time}</p>
                         <p id="e${data.payload[i]._id}" hidden>${data.payload[i].email}</p>
-                        <p id="c${data.payload[i]._id}" hidden>${data.payload[i].venue}</p>
+                        <p id="c${data.payload[i]._id}" hidden>${data.payload[i].date[j].venue}</p>
                         <button class="btn btn-dark m-2 float-right" name="${data.payload[i]._id}" onclick="reminder(this.name)">Send Reminder</button>
                     </div>`)
                     }
@@ -535,7 +537,7 @@ function addCase()
             var data = JSON.parse(this.responseText)
             console.log(data)
             alert('Case added successfully!')
-            window.location.replace('index.html')
+            window.location.replace('dashboard.html')
             
         }
         else if(this.status==403)
@@ -659,7 +661,9 @@ function reminder(id)
         <h4>Next Date : ${cdate}</h4>
         <h4>Time : ${time}</h4>
         <h4>Venue : ${court}</h4>
-        <h4>Judge Name : ${judge}</h4>`
+        <h4>Judge Name : ${judge}</h4>
+        <p><b>NOTE</b>: This is a system generated email. Donot reply to this email.`
+
     }
     console.log(data)
     var jwt = localStorage.getItem('JWT_Token')
@@ -688,6 +692,8 @@ function homecheck()
     {
         $('#homepg').append(`<div class="col"><a href="signup.html">Create Password</a></div>
         <div class="col"><a href="login.html">Login</a></div>`)
+        $('#inst').append(`<li>Register to the portal with our email and password <b style="color:33FFF4">(Goto -> Create Password)</b></li>
+        <li>Once you register, you can proceed to login to your dashboard <b style="color:33FFF4">(Goto -> Login)</b></li>`)
 
     }
     else{
@@ -695,6 +701,9 @@ function homecheck()
         <div class="col">
         <a style="cursor: pointer; color: white;" onclick="logout()">Logout</a>
 </div>`)
+        $('#inst').append(`<li>You have logged In now, you can goto you dashboard <b style="color:33FFF4">(Goto -> My Dashboard)</b></li>
+        <li>In your dashboard you can search cases with mobile number, add new cases, update cases and upload documents</li>
+        <li>Send reminders to clients for their upcoming cases</li>`)
 
     }
 }
