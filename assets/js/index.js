@@ -335,6 +335,30 @@ function details()
             document.getElementById('ejudge').value=data.user.judge
             document.getElementById('cno').innerHTML=data.user.case_no
             document.getElementById('to').value=data.user.email
+            var csdate
+            if(data.user.date.length==0)
+            {
+                csdate='NA'
+                $('#printableArea').append(`
+            <h3>${data.user.party.party1} v/s ${data.user.party.party2}</h3>
+            <div>
+                <p><b>Case Number</b> : ${data.user.case_no}</p>
+                <p><b>Case Description</b> : ${data.user.desc}</p>
+                <p><b>Next Case Hearing Date</b> : ${csdate}</p>
+            </div>`)
+            }
+            else
+            {
+                csdate=data.user.date.length-1
+                $('#printableArea').append(`
+            <h3>${data.user.party.party1} v/s ${data.user.party.party2}</h3>
+            <div>
+                <p><b>Case Number</b> : ${data.user.case_no}</p>
+                <p><b>Case Description</b> : ${data.user.desc}</p>
+                <p><b>Next Case Hearing Date</b> : ${data.user.date[csdate].date}</p>
+            </div>
+        `)
+            }
             if(data.user.date.length!=0)
             {
                 for(var i=0;i<data.user.date.length;i++)
