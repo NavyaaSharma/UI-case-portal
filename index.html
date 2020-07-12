@@ -13,7 +13,25 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
             defer>
         <!-- <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"> -->
+        <link type="text/css" media="assets/css/print.css">
         <link rel="stylesheet" href="assets/css/style.css">
+
+        <head> 
+            <style> 
+                table, th, td { 
+                    border: 1px solid black; 
+                    border-collapse: collapse; 
+                } 
+                
+                th, td { 
+                    padding: 20px; 
+                } 
+                
+                th { 
+                    text-align: left; 
+                } 
+            </style> 
+        </head> 
         
     </head>
     <body onload="homecheck();">
@@ -51,9 +69,21 @@
                 
             </div>
         </section>
+        <!-- <a href="javascript:void(0);" onclick="printPageArea('printableArea')">Print</a> -->
         <script src="./assets/js/index.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <!-- <script>
+            function printPageArea(areaID){
+            var printContent = document.getElementById(areaID);
+            var WinPrint = window.open('', '', 'width=900,height=650');
+            WinPrint.document.write(printContent.innerHTML);
+            WinPrint.document.close();
+            WinPrint.focus();
+            WinPrint.print();
+            WinPrint.close();
+}
+        </script> -->
     </body>
 </html>
